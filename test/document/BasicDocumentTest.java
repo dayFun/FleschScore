@@ -2,6 +2,7 @@ package document;
 
 import org.junit.Test;
 
+import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -89,5 +90,13 @@ public class BasicDocumentTest {
         assertThat(basicDocument.getNumWords(), is(equalTo(15)));
         assertThat(basicDocument.getNumSentences(), is(equalTo(1)));
         assertThat(basicDocument.getNumSyllables(), is(equalTo(32)));
+    }
+
+    @Test
+    public void testFleschScore() throws Exception {
+        basicDocument = new BasicDocument("This is a test.");
+
+        assertThat(basicDocument.getFleschScore(), is(closeTo(118.2, 0.1)));
+
     }
 }
