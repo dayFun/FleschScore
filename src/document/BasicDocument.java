@@ -1,9 +1,15 @@
 package document;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class BasicDocument extends Document {
 
     private static final String NUM_WORDS = "[a-zA-Z]+";
     private static final String NUM_SENTENCES = "[^!?.]+";
+    private static final String NUM_VOWELS_REGEX = "[aeiouy]+";
+    private static final String MAGIC_E_REGEX = "[aeiou][^aeiou]e\\z";
+    private static final String MAGIC_E_EXCEPTION_REGEX = ".+[clrsv]e\\z";
 
     public BasicDocument(String text) {
         super(text);
@@ -21,11 +27,46 @@ public class BasicDocument extends Document {
 
     @Override
     public int getNumSyllables() {
-        //TODO: Implement this method.  See the Module 1 support videos
-        // if you need help.
-        return 0;
+        int numSyllables = 0;
+        String[] words = getText().toLowerCase().replaceAll("[^a-zA-z ]", "").split("\\s+");
+
+        for (String word : words) {
+            numSyllables += getNumVowelsInWord(word);
+
+            if (wordContainsMagicE(word) || magicEException(word)) {
+                numSyllables--;
+            }
+        }
+
+        return numSyllables;
     }
 
+    private int getNumVowelsInWord(String word) {
+        int numVowels = 0;
+
+        Pattern pattern = Pattern.compile(NUM_VOWELS_REGEX);
+        Matcher matcher = pattern.matcher(word);
+
+        while (matcher.find()) {
+            numVowels++;
+        }
+
+        return numVowels;
+    }
+
+    private boolean wordContainsMagicE(String word) {
+        Pattern pattern = Pattern.compile(MAGIC_E_REGEX);
+        Matcher matcher = pattern.matcher(word);
+
+        return matcher.find();
+    }
+
+    private boolean magicEException(String word) {
+        Pattern pattern = Pattern.compile(MAGIC_E_EXCEPTION_REGEX);
+        Matcher matcher = pattern.matcher(word);
+
+        return matcher.find();
+    }
 
     public static void main(String[] args) {
         testCase(new BasicDocument("This is a test.  How many???  "

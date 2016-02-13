@@ -17,6 +17,7 @@ public class BasicDocumentTest {
 
         assertThat(basicDocument.getNumWords(), is(equalTo(13)));
         assertThat(basicDocument.getNumSentences(), is(equalTo(5)));
+        assertThat(basicDocument.getNumSyllables(), is(equalTo(16)));
     }
 
     @Test
@@ -25,6 +26,7 @@ public class BasicDocumentTest {
 
         assertThat(basicDocument.getNumWords(), is(equalTo(0)));
         assertThat(basicDocument.getNumSentences(), is(equalTo(0)));
+        assertThat(basicDocument.getNumSyllables(), is(equalTo(0)));
     }
 
     @Test
@@ -34,6 +36,7 @@ public class BasicDocumentTest {
 
         assertThat(basicDocument.getNumWords(), is(equalTo(11)));
         assertThat(basicDocument.getNumSentences(), is(equalTo(4)));
+        assertThat(basicDocument.getNumSyllables(), is(equalTo(15)));
     }
 
     @Test
@@ -42,6 +45,7 @@ public class BasicDocumentTest {
 
         assertThat(basicDocument.getNumWords(), is(equalTo(3)));
         assertThat(basicDocument.getNumSentences(), is(equalTo(2)));
+        assertThat(basicDocument.getNumSyllables(), is(equalTo(6)));
     }
 
     @Test
@@ -53,14 +57,28 @@ public class BasicDocumentTest {
 
         assertThat(basicDocument.getNumWords(), is(equalTo(33)));
         assertThat(basicDocument.getNumSentences(), is(equalTo(3)));
+        assertThat(basicDocument.getNumSyllables(), is(equalTo(49)));
     }
 
     @Test
-    public void testUCSD_Case_6_7_8() throws Exception {
+    public void testUCSD_Case_6() throws Exception {
         basicDocument = new BasicDocument("Segue");
 
         assertThat(basicDocument.getNumWords(), is(equalTo(1)));
         assertThat(basicDocument.getNumSentences(), is(equalTo(1)));
+        assertThat(basicDocument.getNumSyllables(), is(equalTo(2)));
+    }
+
+    @Test
+    public void testUCSD_Case_7() throws Exception {
+        basicDocument = new BasicDocument("Sentence");
+        assertThat(basicDocument.getNumSyllables(), is(equalTo(2)));
+    }
+
+    @Test
+    public void testUCSD_Case_8() throws Exception {
+        basicDocument = new BasicDocument("Sentences");
+        assertThat(basicDocument.getNumSyllables(), is(equalTo(3)));
     }
 
     @Test
@@ -70,5 +88,6 @@ public class BasicDocumentTest {
 
         assertThat(basicDocument.getNumWords(), is(equalTo(15)));
         assertThat(basicDocument.getNumSentences(), is(equalTo(1)));
+        assertThat(basicDocument.getNumSyllables(), is(equalTo(32)));
     }
 }
